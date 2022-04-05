@@ -25,20 +25,27 @@ class Student:
         return self.__courses
 
     def getCourse(self, courseId):
-        return self.__courses.get(courseId)
+        if (self.__courses.get(courseId) is None):
+            return None
+        return self.__courses.get(courseId)[0]
+
+    def getMark(self, courseId):
+        if (self.__courses.get(courseId) is None):
+            return -1
+        return self.__courses.get(courseId)[1]
 
     def getGPA(self):
         return self.__GPA
     
-    def addCourse(self, course, mark):
-        self.__courses[course] = mark
+    def addCourse(self, id, course, mark):
+        self.__courses[id] = [course, mark]
 
     def calGPA(self):
         weightedSum = 0
         totalCredits = 0
         for courseId in self.__courses:
-            mark = self.__courses.get(courseId)
-            course = getCourseFromId(courseId)
+            mark = self.getMark(courseId) #1:mark, 0:course
+            course = self.getCourse(courseId)
             credits = course.getCredits()
             weightedSum += credits * mark
             totalCredits += credits
@@ -112,7 +119,7 @@ def getMarks(id, studentList):
     for i in range(len(studentList)):
         message = "Enter mark for student {}: ".format(studentList[i].getName())
         mark = math.floor(float(input(message)))
-        studentList[i].addCourse(id, mark)
+        studentList[i].addCourse(id,course,mark)
         studentList[i].calGPA()
 
 def listCourses(courseList):
@@ -147,7 +154,7 @@ def listMarks(id, studentList):
         if (studentList[i].getCourse(id) is None):
             print("No marks for student {} in this course".format(studentList[i].getName()))
         else:
-            print("Student name: {}, mark: {}".format(studentList[i].getName(), studentList[i].getCourse(id)))
+            print("Student name: {}, mark: {}".format(studentList[i].getName(), studentList[i].getMark(id)))
 
 def getGPA(id):
     student = getStudentFromId(id)
