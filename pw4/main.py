@@ -1,6 +1,10 @@
 from domains.Helper import Helper
+from Input import Input
+from Output import Output
 
 helper = Helper()
+inputObj = Input()
+outputObj = Output()
 
 print("Student management program")
 while True:
@@ -14,24 +18,24 @@ while True:
     print("8. Exit")
     choice = int(input("Enter your choice: "))
     if (choice == 1):
-        totalStudents = helper.getNumberOfStudents()
-        helper.getStudentInfos(totalStudents)
+        totalStudents = inputObj.getNumberOfStudents()
+        inputObj.getStudentInfos(totalStudents,helper)
     elif (choice == 2):
-        numberOfCourses = helper.getCourses()
-        helper.getCourseInfos(numberOfCourses)
+        numberOfCourses = inputObj.getCourses()
+        inputObj.getCourseInfos(numberOfCourses,helper)
     elif (choice == 3):
         id = input("Enter the course id: ")
-        helper.getMarks(id, helper.getStudentList())
+        inputObj.getMarks(id, helper)
     elif (choice == 4):
-        helper.listCourses(helper.getCourseList())
+        outputObj.listCourses(helper.getCourseList())
     elif (choice == 5):
-        helper.listStudents(helper.getStudentList())
+        outputObj.listStudents(helper.getStudentList())
     elif (choice == 6):
         id = input("Enter the course id: ")
-        helper.listMarks(id, helper.getStudentList())
+        outputObj.listMarks(id, helper)
     elif (choice == 7):
         id = input("Enter the student id: ")
-        helper.getGPA(id)
+        outputObj.getGPA(id,helper)
     elif (choice == 8):
         break
     else:
